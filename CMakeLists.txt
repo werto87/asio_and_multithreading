@@ -1,5 +1,6 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines -fconstexpr-loop-limit=2000000 -fconstexpr-ops-limit=335544320")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=lld -fcoroutines")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fcoroutines -v")
 cmake_minimum_required(VERSION 3.17)
 project(project VERSION 1.0.0
@@ -30,8 +31,8 @@ target_compile_features(${PROJECT_OPTIONS} INTERFACE cxx_std_20)
 # )
 
 
-# include(cmake/Sanitizers.cmake)
-# enable_sanitizers(${PROJECT_OPTIONS})
+include(cmake/Sanitizers.cmake)
+enable_sanitizers(${PROJECT_OPTIONS})
 
 # allow for static analysis options
 #include(cmake/StaticAnalyzers.cmake) 
@@ -59,11 +60,14 @@ target_include_directories(${TARGET_NAME} PRIVATE
 target_link_libraries(${TARGET_NAME} PRIVATE
 ${PROJECT_WARNINGS}
 ${PROJECT_OPTIONS}
-
+CONAN_PKG::boost
+CONAN_PKG::confu_soci
+CONAN_PKG::confu_boost
+CONAN_PKG::game_01_shared_class
 )
 
 ####### create executable
-OPTION(BUILD_TESTS "enable tests" ON)
+OPTION(BUILD_TESTS "enable tests" OFF)
 IF(BUILD_TESTS)
     enable_testing()
     add_subdirectory(test) 
@@ -71,7 +75,7 @@ ENDIF(BUILD_TESTS)
 
 # add main after  add_subdirectory(test) so we can take the sources from ${TARGET_NAME} and dont have to remove main.cxx from that list
 target_sources(${TARGET_NAME} PRIVATE 
-"main.cxx"
+main.cxx
 )
  
 if (CMAKE_BINARY_DIR)
