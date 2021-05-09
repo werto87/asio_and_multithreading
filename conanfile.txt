@@ -4,6 +4,8 @@ boost/1.75.0
 confu_boost/0.0.1@confu_boost/0.0.1 # from https://github.com/werto87/confu_boost.git
 confu_soci/0.2.0@confu_soci/0.2.0  #from https://github.com/werto87/conan_confu_soci.git
 game_01_shared_class/0.0.1@game_01_shared_class/0.0.1 #from https://github.com/werto87/game_01_shared_class.git
+sml/1.1.4
+pipes/1.0.0
 [generators]
 cmake
 [options]

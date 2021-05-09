@@ -1,6 +1,5 @@
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines -fconstexpr-loop-limit=2000000 -fconstexpr-ops-limit=335544320")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fuse-ld=lld -fcoroutines")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -fcoroutines ")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -g -fuse-ld=lld -fcoroutines")
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fcoroutines -v")
 cmake_minimum_required(VERSION 3.17)
 project(project VERSION 1.0.0
@@ -64,6 +63,9 @@ CONAN_PKG::boost
 CONAN_PKG::confu_soci
 CONAN_PKG::confu_boost
 CONAN_PKG::game_01_shared_class
+CONAN_PKG::sml
+CONAN_PKG::pipes
+
 )
 
 ####### create executable
